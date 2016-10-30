@@ -5,7 +5,7 @@ print("River Ride")
 
 import pygame                # importujemy biblioteki pygame
 import os 
-screen_size = (2000,1000)      # ustalamy rozmiar ekranu
+      
  
 class IsoGame(object):
     def __init__(self):
@@ -13,7 +13,7 @@ class IsoGame(object):
         flag = pygame.DOUBLEBUF    # wlaczamy tryb podwojnego buforowania
  
         # tworzymy bufor na  grafike
-        self.surface = pygame.display.set_mode(screen_size,flag)
+        self.surface = pygame.display.set_mode((2000,1000),flag)  # ustalamy rozmiar ekranu
         
         #odmierzamy fragmenty czasu
         self.last = pygame.time.get_ticks()
@@ -89,16 +89,16 @@ class IsoGame(object):
  
            keys = pygame.key.get_pressed() # odczytujemy stan klawiszy
  
-           if keys[pygame.K_s]:
+           if keys[pygame.K_s] or keys[pygame.K_DOWN]:
               self.move(0,1)  # ruch w dol
  
-           if keys[pygame.K_w]:
+           if keys[pygame.K_w] or keys[pygame.K_UP]:
               self.move(0,-1)   # ruch w gore
  
-           if keys[pygame.K_d]:
+           if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
               self.move(1,0)  # ruch w prawo
  
-           if keys[pygame.K_a]:
+           if keys[pygame.K_a] or keys[pygame.K_LEFT]:
               self.move(-1,0)   # ruch w lewo
  
                      
