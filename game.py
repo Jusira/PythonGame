@@ -84,7 +84,7 @@ def main():
                 return                 
         
         
-        #czyszczenie tla
+        #tlo
         screen.blit(background, (0, 0))
         #aktywny button
         buttons[active_button] = font.render(captions[active_button], 1, (255,10,255)) #napis + kolor    

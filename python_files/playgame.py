@@ -5,15 +5,27 @@ print("River Ride")
 
 import pygame                # importujemy biblioteki pygame
 import os 
-      
+     
  
 class IsoGame(object):
     def __init__(self):
         pygame.init()       # incjalizujemy biblioteke pygame
+        screen = pygame.display.set_mode((100,100))
         flag = pygame.DOUBLEBUF    # wlaczamy tryb podwojnego buforowania
  
         # tworzymy bufor na  grafike
-        self.surface = pygame.display.set_mode((2000,1000),flag)  # ustalamy rozmiar ekranu
+        self.surface = pygame.display.set_mode((1500,1000),flag)  # ustalamy rozmiar ekranu
+                
+        
+              
+        self.grass_image = pygame.image.load(os.path.join('textures', 'grass.png')) #trawa
+        self.grass_positions = [[0,0],[1000,0],[2000,0]] #pozycje trawy
+        
+        #czcionka coins
+        self.font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 50)
+        self.actual_coins_status = 0
+        self.text_coins = self.font2.render("Coins:", 1, (255, 255, 255))
+        
         
         #odmierzamy fragmenty czasu
         self.last = pygame.time.get_ticks()
@@ -68,12 +80,34 @@ class IsoGame(object):
              self.licznik += 1
         self.surface.blit(self.player_image[self.player_frame],(self.player_x,self.player_y)) # umieszczamy gracza
     
+    def grass_refresh(self):
+        """odswieza pozycje trawy"""
+        for i in self.grass_positions:
+            self.surface.blit(self.grass_image,i)
+            if i[0] > -1000:
+                i[0] -= 10
+            else:
+                i[0] = 2000
+                
+            
+    
+    
     def game_refresh(self):
         """odświeża cały ekran gry"""
         now = pygame.time.get_ticks()
         if now - self.last >= self.player_cooldown:
             self.last = now
             self.surface.fill((0,0,0)) # czyscimy ekran, malo wydajne ale wystarczy 
+            
+            
+            
+            self.grass_refresh()
+            #odswiezamy tlo
+            self.surface.blit(self.text_coins, (100,20))
+            #odswiezamy coinsy
+            self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (255, 255, 255))
+            self.surface.blit(self.coins_value, (230,20))
+            #odswiezamy gracza
             self.player_refresh()
     
     def game_exit(self):
@@ -82,7 +116,7 @@ class IsoGame(object):
  
     def loop(self):
         """ glowna petla gry """
-        while self.gamestate==1:
+        while self.gamestate==1:           
            for event in pygame.event.get():
                if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                    self.gamestate=0
@@ -102,9 +136,11 @@ class IsoGame(object):
               self.move(-1,0)   # ruch w lewo
  
                      
-           self.game_refresh()
+           
            
 
+           self.game_refresh()
+           
            pygame.display.flip()   # przenosimy bufor na ekran
  
         self.game_exit()
