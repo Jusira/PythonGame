@@ -6,18 +6,36 @@ print("River Ride")
 import pygame                # importujemy biblioteki pygame
 import os 
      
- 
-class IsoGame(object):
+class Enemy_zombie_male:
     def __init__(self):
+        self.position_x = 500
+        self.position_y = 0
+        self.image = [pygame.image.load(os.path.join('zombie_male', 'Walk1.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk2.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk3.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk4.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk5.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk6.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk7.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk8.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk9.png')),
+                      pygame.image.load(os.path.join('zombie_male', 'Walk10.png'))]
+
+zombie_male_enemy = Enemy_zombie_male()
+        
+class IsoGame(object):
+    def __init__(self,zombie_male_enemy):
         pygame.init()       # incjalizujemy biblioteke pygame
         screen = pygame.display.set_mode((100,100))
         flag = pygame.DOUBLEBUF    # wlaczamy tryb podwojnego buforowania
  
         # tworzymy bufor na  grafike
         self.surface = pygame.display.set_mode((1500,1000),flag)  # ustalamy rozmiar ekranu
-                
-        
-              
+         
+        #lista przeciwnikow
+        self.enemy_list = [zombie_male_enemy]
+            
+        #tekstury trawy    
         self.grass_image = pygame.image.load(os.path.join('textures', 'grass.png')) #trawa
         self.grass_positions = [[0,0],[1000,0],[2000,0]] #pozycje trawy
         
@@ -29,7 +47,7 @@ class IsoGame(object):
         
         #odmierzamy fragmenty czasu
         self.last = pygame.time.get_ticks()
-        self.player_cooldown = 40
+        self.player_cooldown = 60
         self.licznik = 0 # zmienna pomocnicza do liczenia wejść do ifa i odświeżania
  
         # zmienna stanu gry
@@ -48,37 +66,58 @@ class IsoGame(object):
         self.speed = 3     # szybkosc poruszania duszka
         self.player_x = 50   # pozycja x duszka na ekranie
         self.player_y = 30   # pozycja y duszka na ekranie
- 
+                    
+            
         self.loop()                             # glowna petla gry
- 
+    
+    def collision(self,x1,y1,w1,h1,x2,y2,w2,h2): #sprawdza kolizję z duszkiem
+        if x1 >= x2+w2: return True
+        if x1+w1 <= x2: return True
+        if y1 >= y2+h2: return True
+        if y1+h1 <= y2: return True
+        return False
+    
+    def screen_collision(self, x,y): #sprawdza kolizję z końcem ekranu
+        if x <= -50 or x >= 1320: return True
+        if y <= -20 or y >= 800: return True
+        return False
+
     def move(self,dirx,diry):
        """ poruszanie duszkiem """
-       self.player_x = self.player_x + (dirx * self.speed)
-       self.player_y = self.player_y + (diry * self.speed)
+       dx = self.player_x + (dirx * self.speed)
+       dy = self.player_y + (diry * self.speed)
+       #if not self.collision(dx,dy,100,100,self.sprite_x,self.sprite_y,100,100): #kolizja z innym duszkiem
+       if self.screen_collision(dx,dy):
+           return
+       self.player_x = dx
+       self.player_y = dy
+    
+    def enemy_move(self):
+        """rusza przeciwnikiem"""
+        for en in self.enemy_list:
+            en.position_x -= 10
+            
+    def enemy_update(self):
+        """usuwa przeciwnikow ktorzy wyszli poza plansze lub zostali zabici"""
+        for en in self.enemy_list:
+            if en.position_x < -200:
+                self.enemy_list.remove(en)
+        
+    def enemy_refresh(self):
+        """odswieza przeciwnikow"""
+        for en in self.enemy_list:
+           self.surface.blit(en.image[(self.player_frame)% 10],(en.position_x,en.position_y)) 
+        
+           
+         
  
     def player_refresh(self):
         ''' odswieza animacje gracza jezeli minelo wystarczajaco duzo czasu od ostatniego ticka'''
         if self.licznik == 1:
-            if self.player_frame == 0:
-                self.player_frame = 1            
-            elif self.player_frame == 1:
-                self.player_frame = 2
-            elif self.player_frame == 2:
-                self.player_frame = 3
-            elif self.player_frame == 3:
-                self.player_frame = 4
-            elif self.player_frame == 4:
-                self.player_frame = 5
-            elif self.player_frame == 5:
-                self.player_frame = 6
-            elif self.player_frame == 6:
-                self.player_frame = 7
-            else:
-                self.player_frame = 0
-            self.licznik = 0
+            self.player_frame = (self.player_frame +1) % 1000
         else:
-             self.licznik += 1
-        self.surface.blit(self.player_image[self.player_frame],(self.player_x,self.player_y)) # umieszczamy gracza
+            self.licznik = 1
+        self.surface.blit(self.player_image[self.player_frame % 8],(self.player_x,self.player_y)) # umieszczamy gracza
     
     def grass_refresh(self):
         """odswieza pozycje trawy"""
@@ -107,8 +146,14 @@ class IsoGame(object):
             #odswiezamy coinsy
             self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (255, 255, 255))
             self.surface.blit(self.coins_value, (230,20))
+            #odswiezamy przeciwnikow
+            self.enemy_move()
+            self.enemy_update()
+            self.enemy_refresh()
             #odswiezamy gracza
             self.player_refresh()
+            
+            
     
     def game_exit(self):
         """ funkcja przerywa dzialanie gry i wychodzi do systemu"""
@@ -119,8 +164,10 @@ class IsoGame(object):
         while self.gamestate==1:           
            for event in pygame.event.get():
                if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                   self.gamestate=0
- 
+                   #self.gamestate = 0
+                   exec(open(os.path.join('python_files','game_end.py')).read())
+                   exit()
+                    
            keys = pygame.key.get_pressed() # odczytujemy stan klawiszy
  
            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
@@ -145,5 +192,8 @@ class IsoGame(object):
  
         self.game_exit()
  
+
+
 if __name__ == '__main__':
-   IsoGame()
+   IsoGame(zombie_male_enemy)
+   

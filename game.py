@@ -4,7 +4,7 @@ import pygame
 def main():
     #inicjalizacja ekranu
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 800))
     pygame.display.set_caption('Game')
     
     #wczytanie stanu gry
@@ -25,9 +25,9 @@ def main():
      
     
     #tworzymy buttony
-    captions = ["Play", "Reset progress", "Credits", "Quit"]
-    buttons = [0] * 4
-    for i in range(4):
+    captions = ["Play","Upgrades","How to play", "Reset progress", "Credits", "Quit"]
+    buttons = [0] * 6
+    for i in range(6):
         buttons[i] = font.render(captions[i], 1, (10,10,10)) #napis + kolor    
         background.blit(buttons[i], (50,100+100*i)) #tekst + pozycja
     
@@ -42,7 +42,7 @@ def main():
         if now - last > 250: 
             last = pygame.time.get_ticks()
             if up_or_down == "down":
-                if active_button < 3:
+                if active_button < 5:
                     return (active_button + 1, last)
             else:
                 if active_button > 0:
@@ -57,7 +57,7 @@ def main():
     
     # Event loop
     while 1:
-        for event in pygame.event.get():
+        for event in pygame.event.get():	
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 return #wyjscie z petli
             
@@ -71,16 +71,22 @@ def main():
             if active_button == 0:
                 exec(open(os.path.join('python_files', 'playgame.py')).read())
             if active_button == 1:
+                #wyswietli upgrades
+                pass
+            if active_button == 2:
+                #wyswietli how to play
+                pass
+            if active_button == 3:
                 game_status.close()
                 game_status = open(os.path.join('other_data', 'game_status.txt'),'w')
                 game_status.write('0')
                 game_status.close()
                 game_status = open(os.path.join('other_data', 'game_status.txt'),'r')
                 coins_value = game_status.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
-            if active_button == 2:
+            if active_button == 4:
                 #wyswietli creditsy
                 pass
-            if active_button ==3:
+            if active_button == 5:
                 return                 
         
         
