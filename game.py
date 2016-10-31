@@ -4,7 +4,7 @@ import pygame
 def main():
     #inicjalizacja ekranu
     pygame.init()
-    screen = pygame.display.set_mode((800, 800))
+    screen = pygame.display.set_mode((1000, 800))
     pygame.display.set_caption('Game')
     
     #wczytanie stanu gry
@@ -21,7 +21,7 @@ def main():
     font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 50)
     
     text_coins = font2.render("Coins:", 1, (10, 10, 10))
-    background.blit(text_coins, (400,20)) 
+    background.blit(text_coins, (400,10)) 
      
     
     #tworzymy buttony
@@ -57,7 +57,7 @@ def main():
     
     # Event loop
     while 1:
-        for event in pygame.event.get():	
+        for event in pygame.event.get():
             if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 return #wyjscie z petli
             
@@ -71,8 +71,7 @@ def main():
             if active_button == 0:
                 exec(open(os.path.join('python_files', 'playgame.py')).read())
             if active_button == 1:
-                #wyswietli upgrades
-                pass
+                exec(open(os.path.join('python_files', 'game_upgrade.py')).read())
             if active_button == 2:
                 #wyswietli how to play
                 pass
@@ -83,6 +82,15 @@ def main():
                 game_status.close()
                 game_status = open(os.path.join('other_data', 'game_status.txt'),'r')
                 coins_value = game_status.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
+                settings_values = ["selected","buy for 50",   "selected", "buy for 50", "buy for 50" ,"selected","buy for 50", "upgrade for 10","upgrade for 10","upgrade for 10"]
+                settings = open(os.path.join('other_data', 'settings.txt'),'w')
+                for el in settings_values:
+                    settings.write(el + '\n')
+                settings.close()
+                upgrades = open(os.path.join('other_data', 'upgrades.txt'),'w')
+                for i in range(3):
+                    upgrades.write('1' + '\n')
+                upgrades.close()
             if active_button == 4:
                 #wyswietli creditsy
                 pass
@@ -97,7 +105,7 @@ def main():
         screen.blit(buttons[active_button], (50,100+100*active_button)) #tekst + pozycja
         #stan coinsow
         text_coins = font2.render(coins_value, 1, (10, 10, 10))
-        screen.blit(text_coins, (530,20))
+        screen.blit(text_coins, (530,10))
         
         pygame.display.flip()
         

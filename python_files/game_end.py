@@ -7,10 +7,13 @@ def main():
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('Game')
     
-    #wczytanie ilosci coinsow
+    #wczytanie ilosci coinsow i wyzerownanie pliku
     current_game = open(os.path.join('other_data', 'current_game.txt'),'r')
     coins_value = current_game.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
-    
+    current_game.close()
+    current_game = open(os.path.join('other_data', 'current_game.txt'),'w')
+    current_game.write(str(0))
+    current_game.close()
     #dodanie zarobionych coinsow do wszystkich
     game_status = open(os.path.join('other_data', 'game_status.txt'),'r')
     coins_all = game_status.readline().strip('\n\r')
