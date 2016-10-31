@@ -8,7 +8,8 @@ def main():
     pygame.display.set_caption('Game')
     
     last = pygame.time.get_ticks()
-    
+    first_enter = True
+    enter = pygame.time.get_ticks()
     #kolor tla
     background = pygame.Surface(screen.get_size())
     background = background.convert()
@@ -153,18 +154,20 @@ def main():
                 (act_pos[0], act_pos[1], last) = change_active_button("left", last)
                 
         if keys[pygame.K_RETURN]:
-            if act_pos[0] <=2:
-                if positions[act_pos[0]][act_pos[1]] == "buy for 50" and int(coins_value) >= 50:
-                    coins_value = int(coins_value) - 50
-                    positions[act_pos[0]][act_pos[1]] = "select"
-                elif positions[act_pos[0]][act_pos[1]] == "select":
-                    for j in range(len(positions[act_pos[0]])):
-                        if positions[act_pos[0]][j] == "selected":
-                            positions[act_pos[0]][j] = "select"
-                    positions[act_pos[0]][act_pos[1]] = "selected"
-                    
-            if 3 <= act_pos[0] :
-                    (upgrades_values, coins_value, last) = buy_upgrade(coins_value,last)
+            now = pygame.time.get_ticks()
+            if now - enter >250: #po to, zeby nie wciskal nam sie enter na poczatku
+                if act_pos[0] <=2:
+                    if positions[act_pos[0]][act_pos[1]] == "buy for 50" and int(coins_value) >= 50:
+                        coins_value = int(coins_value) - 50
+                        positions[act_pos[0]][act_pos[1]] = "select"
+                    elif positions[act_pos[0]][act_pos[1]] == "select":
+                        for j in range(len(positions[act_pos[0]])):
+                            if positions[act_pos[0]][j] == "selected":
+                                positions[act_pos[0]][j] = "select"
+                        positions[act_pos[0]][act_pos[1]] = "selected"
+
+                if 3 <= act_pos[0] :
+                        (upgrades_values, coins_value, last) = buy_upgrade(coins_value,last)
             
         settings_values = update_values()        
                 
@@ -226,7 +229,7 @@ def main():
         text = font2.render(str(positions[act_pos[0]][act_pos[1]]), 1, (255, 10, 255))
         screen.blit(text, (400 + act_pos[1]* 200, 150 + act_pos[0] * 100))
         
-        
+        setting_values = update_values()
        
         save_changes()
         

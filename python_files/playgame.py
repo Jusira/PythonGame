@@ -20,7 +20,7 @@ class IsoGame(object):
         def __init__(self,x,y):
             self.position_x = x
             self.position_y = y
-            self.speed = 15
+            self.speed = 20
             self.height = 195
             self.width = 161
             self.coins = 1
@@ -32,7 +32,7 @@ class IsoGame(object):
         def __init__(self,x,y):
             self.position_x = x
             self.position_y = y
-            self.speed = 30
+            self.speed = 15
             self.height = 195
             self.width = 161
             self.coins = 1
@@ -57,6 +57,31 @@ class IsoGame(object):
         screen = pygame.display.set_mode((100,100))
         flag = pygame.DOUBLEBUF    # wlaczamy tryb podwojnego buforowania
  
+
+
+
+        #wczytujemy dane:
+        settings = open(os.path.join('other_data', 'settings.txt'),'r')
+        settings_values = [settings.readline().strip('\n\r') for i in range(11)]
+        settings.close()
+        upgrades = open(os.path.join('other_data', 'upgrades.txt'),'r')
+        upgrades_values = [upgrades.readline().strip('\n\r') for i in range(3)]
+        upgrades.close()
+        
+        #ustawiamy predkosci
+        self.player_cooldown = 60 #szybkosc gry
+        self.shoot_cooldown = 1000 - 100* int(upgrades_values[0])
+        self.speed = 3 * int(upgrades_values[2])  #szybkosc poruszania gracza
+        self.lifes = int(upgrades_values[1])
+        
+        self.life_image = pygame.image.load(os.path.join('images/life', 'life.png'))
+        
+        #ustawiamy czas
+        self.clock = pygame.time.Clock()
+        self.minutes = 0
+        self.seconds = 0
+        self.milliseconds = 0
+        
         # tworzymy bufor na  grafike
         self.surface = pygame.display.set_mode((1500,1000),flag)  # ustalamy rozmiar ekranu
          
@@ -68,42 +93,66 @@ class IsoGame(object):
         #lista pociskow
         self.bullet_list = []
             
-        #tekstury trawy    
-        self.grass_image = pygame.image.load(os.path.join('images/textures', 'grass.png')) #trawa
+        #tekstury trawy  
+        if settings_values[1] == 'selected':
+                self.grass_image = pygame.image.load(os.path.join('images/textures', 'snow.jpg')) #snieg
+        else:
+            self.grass_image = pygame.image.load(os.path.join('images/textures', 'grass.png')) #trawa
         self.grass_positions = [[0,0],[1000,0],[2000,0]] #pozycje trawy
         
         #czcionka coins
         self.font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 50)
         self.actual_coins_status = 0
-        self.text_coins = self.font2.render("Coins:", 1, (255, 255, 255))
+        self.text_coins = self.font2.render("Coins:", 1, (0, 0, 0))
         
         #tablica animacji:
-        self.animations = [[pygame.image.load(os.path.join('images/zombie_male', 'Walk%d.png' % i)) for i in range(1,11)], #zombie_male_walk
-              [pygame.image.load(os.path.join('images/zombie_male', 'rsz_1rsz_dead%d.png' % i)) for i in range(1,13)], #zombie_male_dead
-              [pygame.image.load(os.path.join('images/zombie_female', 'rsz_1rsz_walk_%d.png' % i)) for i in range(1,11)], #zombie_female_walk
-              [pygame.image.load(os.path.join('images/zombie_female', 'rsz_1rsz_dead_%d.png' % i)) for i in range(1,13)],
-              [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_run_%d.png' % i)) for i in range(1,9)],
-              [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_dead_%d.png' % i)) for i in range(1,11)]]
-
-        self.bullet_animations = [pygame.image.load(os.path.join('images/bullet', 'rsz_bullet_00%d.png' % i)) for i in range(0,5)]
+        if settings_values[5] == 'selected':
+            self.animations = [[pygame.image.load(os.path.join('images/zombie_male', 'Walk%d.png' % i)) for i in range(1,11)], #zombie_male_walk
+                  [pygame.image.load(os.path.join('images/zombie_male', 'rsz_1rsz_dead%d.png' % i)) for i in range(1,13)], #zombie_male_dead
+                  [pygame.image.load(os.path.join('images/zombie_female', 'rsz_1rsz_walk_%d.png' % i)) for i in range(1,11)], #zombie_female_walk
+                  [pygame.image.load(os.path.join('images/zombie_female', 'rsz_1rsz_dead_%d.png' % i)) for i in range(1,13)],
+                  [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_run_%d.png' % i)) for i in range(1,9)],
+                  [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_dead_%d.png' % i)) for i in range(1,11)]]
+        else:
+            self.animations = [[pygame.image.load(os.path.join('images/Cat', 'rsz_1rsz_run_%d.png' % i)) for i in range(1,9)], 
+                  [pygame.image.load(os.path.join('images/Cat', 'rsz_1rsz_dead_%d.png' % i)) for i in range(1,11)], 
+                  [pygame.image.load(os.path.join('images/Dog', 'rsz_rsz_run_%d.png' % i)) for i in range(1,8)], 
+                  [pygame.image.load(os.path.join('images/Dog', 'rsz_rsz_dead_%d.png' % i)) for i in range(1,11)],
+                  [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_run_%d.png' % i)) for i in range(1,9)],
+                  [pygame.image.load(os.path.join('images/Jack', 'rsz_rsz_1rsz_dead_%d.png' % i)) for i in range(1,11)]]
+            
+            
+            
+            
+        
         #odmierzamy fragmenty czasu
         self.last = pygame.time.get_ticks()
         self.last_shoot = pygame.time.get_ticks()
         self.last_enemy = pygame.time.get_ticks()
-        self.player_cooldown = 60
-        self.shoot_cooldown = 1300
+        self.last_life = pygame.time.get_ticks()
         self.licznik = 0 # zmienna pomocnicza do liczenia wejść do ifa i odświeżania
  
         # zmienna stanu gry
         self.gamestate = 1  # 1 - run, 0 - exit
         
-        self.player_image_shoot = [pygame.image.load(os.path.join('images/robot_shoot', 'rsz_1rsz_runshoot%d.png' % i)) for i in range(5,10)]
-                    
-        player_image_run = [pygame.image.load(os.path.join('images/robot_run', 'Run(%d).png' % i)) for i in range(1,9)] 
-                          
+        if settings_values[2] == 'selected':
+            self.player_image_shoot = [pygame.image.load(os.path.join('images/robot_shoot', 'rsz_1rsz_runshoot%d.png' % i)) for i in range(5,10)]
+            player_image_run = [pygame.image.load(os.path.join('images/robot_run', 'Run(%d).png' % i)) for i in range(1,9)] 
+            self.bullet_animations = [pygame.image.load(os.path.join('images/bullet', 'rsz_bullet_00%d.png' % i)) for i in range(0,5)]
+        
+        if settings_values[3] == 'selected':
+            self.player_image_shoot = [pygame.image.load(os.path.join('images/ninja_female', '/home/alicja/Alicja/PADPy2016/repozytoria/RiverRide_PythonGame/images/ninja_female/rsz_1rsz_throw__00%d.png' % i)) for i in range(5)]
+            player_image_run = [pygame.image.load(os.path.join('images/ninja_female', 'rsz_1rsz_run__00%d.png' % i)) for i in range(10)] 
+            self.bullet_animations = [pygame.image.load(os.path.join('images/kunai', 'Kunai.png')) for i in range(1)]   
+        
+        if settings_values[4] == 'selected':
+            self.player_image_shoot = [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_throw__00%d.png' % i)) for i in range(5)]
+            player_image_run = [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_run__00%d.png' % i)) for i in range(10)] 
+            self.bullet_animations = [pygame.image.load(os.path.join('images/kunai', 'Kunai.png')) for i in range(1)]   
+        
+            
         self.player_image = player_image_run
         self.player_frame = 1 
-        self.speed = 3     # szybkosc poruszania duszka
         self.player_x = 50   # pozycja x duszka na ekranie
         self.player_y = 400   # pozycja y duszka na ekranie
          
@@ -154,10 +203,17 @@ class IsoGame(object):
                         
     def player_collisions(self):
         self.pl_rect = pygame.Rect(self.player_x, self.player_y - 50, 100, 130)
+        now = pygame.time.get_ticks()
         for en in self.enemy_list:
             self.en_rect = pygame.Rect(en.position_x, en.position_y - 50, en.width - 100, en.height - 60)
-            if self.pl_rect.colliderect(self.en_rect):
-                self.dead = True
+            if self.pl_rect.colliderect(self.en_rect) and now - self.last_life > 500:
+                self.enemy_kill(en)
+                self.last_life = now
+                if self.lifes == 1:
+                    self.dead = True
+                else:
+                    self.lifes -= 1
+                    
                     
 
     def enemy_kill(self,en):
@@ -195,19 +251,20 @@ class IsoGame(object):
         self.licznik_strzalu += 1
     
     def enemy_create(self):
+        '''losowo tworzymy przeciwnika'''
         now = pygame.time.get_ticks()
-        if now - self.last_enemy > 1500//(1 + 0.01 *self.licznik_przeciwnikow):
+        if now - self.last_enemy > 1500//(1 + 0.005 *self.licznik_przeciwnikow):
             self.last_enemy = now
             self.licznik_przeciwnikow += 1
             #tworzymy zwykle zombiaki
-            for i in range(self.random.randrange(0,2+int(0.1*self.licznik_przeciwnikow),1)):
+            for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/100,2.5))))):
                 self.enemy_list.append(self.Enemy_zombie_male(1500,self.random.randrange(0,800,80)))
             #tworzymy female zombie
-            if self.licznik_przeciwnikow >= 10:
-                for i in range(self.random.randrange(0,1+int(0.1*self.licznik_przeciwnikow),1)):
+            if self.licznik_przeciwnikow > 10:
+                for i in rrange(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/200,2))))):
                     self.enemy_list.append(self.Enemy_zombie_female(1500,self.random.randrange(0,800,80)))
-            if self.licznik_przeciwnikow >= 20:
-                for i in range(self.random.randrange(0,1+int(0.1*self.licznik_przeciwnikow),1)):
+            if self.licznik_przeciwnikow > 40:
+                for i in range(self.random.randrange(0,1+int(0.001*self.licznik_przeciwnikow),1)):
                     self.enemy_list.append(self.Enemy_Jack(1500,self.random.randrange(0,800,80)))
                 
     
@@ -260,7 +317,7 @@ class IsoGame(object):
     def bullet_refresh(self):
         """odswieza pociski"""
         for en in self.bullet_list:
-            self.surface.blit(self.bullet_animations[(self.player_frame)% 5],(en.position_x,en.position_y)) 
+            self.surface.blit(self.bullet_animations[(self.player_frame)% len(self.bullet_animations)],(en.position_x,en.position_y)) 
         
     
                 
@@ -276,10 +333,7 @@ class IsoGame(object):
                       
             self.grass_refresh()
             #odswiezamy tlo
-            self.surface.blit(self.text_coins, (100,20))
-            #odswiezamy coinsy
-            self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (255, 255, 255))
-            self.surface.blit(self.coins_value, (230,20))
+            
             #sprawdzamy kolizje
             self.bullets_collisions()
             #odswiezamy przeciwnikow
@@ -287,21 +341,29 @@ class IsoGame(object):
             self.enemy_update()
             self.enemy_refresh()
             self.death_animation()
-            #odswiezamy pociski
-            self.bullet_move()
-            self.bullet_update()
-            self.bullet_refresh()
             #odswiezamy gracza
             self.player_collisions()
             if now - self.last_shoot >= self.shoot_cooldown and self.shoot_now == True:
-                self.bullet_list.append(self.Bullet_player(self.player_x + 30,self.player_y + 60))
+                self.bullet_list.append(self.Bullet_player(self.player_x + 100,self.player_y + 60))
                 self.last_shoot = now
             self.shoot_now = False    
             if self.shoot_now2 == True:
                 self.player_shoot()
             else:
                 self.player_refresh()
-
+            #odswiezamy pociski
+            self.bullet_move()
+            self.bullet_update()
+            self.bullet_refresh()
+            self.surface.blit(self.text_coins, (150,20))
+            for i in range(self.lifes):
+                self.surface.blit(self.life_image,(1150 + i * 70,10))
+            #odswiezamy coinsy
+            self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (0, 0, 0))
+            self.surface.blit(self.coins_value, (300,20))
+            #odswiezamy czas
+            time = self.font2.render("{}:{}".format(4-self.minutes, 60 -self.seconds), 1, (0, 0, 0))
+            self.surface.blit(time,(10,20))
             
     
     def game_exit(self):
@@ -341,13 +403,27 @@ class IsoGame(object):
                 self.shoot_now2 = True 
                 
             self.enemy_create()
-                     
-           
-           
+            
+            # odliczamy czas
+            if self.milliseconds > 1000:
+                self.seconds += 1
+                self.milliseconds -= 1000
+            if self.seconds > 60:
+                self.minutes += 1
+                self.seconds -= 60
+                
+            self.milliseconds += self.clock.tick_busy_loop(60)
+          
 
             self.game_refresh()
            
             pygame.display.flip()   # przenosimy bufor na ekran
+            
+            if self.minutes == 5:
+                exec(open(os.path.join('python_files','cong.py')).read())
+                exit()
+            
+                
  
         self.game_exit()
  
