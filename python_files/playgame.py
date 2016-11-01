@@ -35,7 +35,7 @@ class IsoGame(object):
             self.speed = 15
             self.height = 195
             self.width = 161
-            self.coins = 1
+            self.coins = 2
             self.hp = 2
             self.image = 1
             
@@ -58,11 +58,14 @@ class IsoGame(object):
         flag = pygame.DOUBLEBUF    # wlaczamy tryb podwojnego buforowania
  
 
-
+        #muzyka
+        pygame.mixer.init()
+        pygame.mixer.music.load(os.path.join('sounds', 'game.mp3'))
+        pygame.mixer.music.play(loops = -1)
 
         #wczytujemy dane:
         settings = open(os.path.join('other_data', 'settings.txt'),'r')
-        settings_values = [settings.readline().strip('\n\r') for i in range(11)]
+        self.settings_values = [settings.readline().strip('\n\r') for i in range(11)]
         settings.close()
         upgrades = open(os.path.join('other_data', 'upgrades.txt'),'r')
         upgrades_values = [upgrades.readline().strip('\n\r') for i in range(3)]
@@ -70,7 +73,7 @@ class IsoGame(object):
         
         #ustawiamy predkosci
         self.player_cooldown = 60 #szybkosc gry
-        self.shoot_cooldown = 1000 - 100* int(upgrades_values[0])
+        self.shoot_cooldown = 2000 - 250* int(upgrades_values[0])
         self.speed = 3 * int(upgrades_values[2])  #szybkosc poruszania gracza
         self.lifes = int(upgrades_values[1])
         
@@ -94,7 +97,7 @@ class IsoGame(object):
         self.bullet_list = []
             
         #tekstury trawy  
-        if settings_values[1] == 'selected':
+        if self.settings_values[1] == 'selected':
                 self.grass_image = pygame.image.load(os.path.join('images/textures', 'snow.jpg')) #snieg
         else:
             self.grass_image = pygame.image.load(os.path.join('images/textures', 'grass.png')) #trawa
@@ -106,7 +109,7 @@ class IsoGame(object):
         self.text_coins = self.font2.render("Coins:", 1, (0, 0, 0))
         
         #tablica animacji:
-        if settings_values[5] == 'selected':
+        if self.settings_values[5] == 'selected':
             self.animations = [[pygame.image.load(os.path.join('images/zombie_male', 'Walk%d.png' % i)) for i in range(1,11)], #zombie_male_walk
                   [pygame.image.load(os.path.join('images/zombie_male', 'rsz_1rsz_dead%d.png' % i)) for i in range(1,13)], #zombie_male_dead
                   [pygame.image.load(os.path.join('images/zombie_female', 'rsz_1rsz_walk_%d.png' % i)) for i in range(1,11)], #zombie_female_walk
@@ -135,17 +138,17 @@ class IsoGame(object):
         # zmienna stanu gry
         self.gamestate = 1  # 1 - run, 0 - exit
         
-        if settings_values[2] == 'selected':
+        if self.settings_values[2] == 'selected':
             self.player_image_shoot = [pygame.image.load(os.path.join('images/robot_shoot', 'rsz_1rsz_runshoot%d.png' % i)) for i in range(5,10)]
             player_image_run = [pygame.image.load(os.path.join('images/robot_run', 'Run(%d).png' % i)) for i in range(1,9)] 
             self.bullet_animations = [pygame.image.load(os.path.join('images/bullet', 'rsz_bullet_00%d.png' % i)) for i in range(0,5)]
         
-        if settings_values[3] == 'selected':
+        if self.settings_values[3] == 'selected':
             self.player_image_shoot = [pygame.image.load(os.path.join('images/ninja_female', '/home/alicja/Alicja/PADPy2016/repozytoria/RiverRide_PythonGame/images/ninja_female/rsz_1rsz_throw__00%d.png' % i)) for i in range(5)]
             player_image_run = [pygame.image.load(os.path.join('images/ninja_female', 'rsz_1rsz_run__00%d.png' % i)) for i in range(10)] 
             self.bullet_animations = [pygame.image.load(os.path.join('images/kunai', 'Kunai.png')) for i in range(1)]   
         
-        if settings_values[4] == 'selected':
+        if self.settings_values[4] == 'selected':
             self.player_image_shoot = [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_throw__00%d.png' % i)) for i in range(5)]
             player_image_run = [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_run__00%d.png' % i)) for i in range(10)] 
             self.bullet_animations = [pygame.image.load(os.path.join('images/kunai', 'Kunai.png')) for i in range(1)]   
@@ -210,6 +213,7 @@ class IsoGame(object):
                 self.enemy_kill(en)
                 self.last_life = now
                 if self.lifes == 1:
+                    self.lifes = 0
                     self.dead = True
                 else:
                     self.lifes -= 1
@@ -260,11 +264,11 @@ class IsoGame(object):
             for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/100,2.5))))):
                 self.enemy_list.append(self.Enemy_zombie_male(1500,self.random.randrange(0,800,80)))
             #tworzymy female zombie
-            if self.licznik_przeciwnikow > 10:
-                for i in rrange(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/200,2))))):
+            if self.minutes > 0:
+                for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/300,2))))):
                     self.enemy_list.append(self.Enemy_zombie_female(1500,self.random.randrange(0,800,80)))
-            if self.licznik_przeciwnikow > 40:
-                for i in range(self.random.randrange(0,1+int(0.001*self.licznik_przeciwnikow),1)):
+            if self.minutes > 2:
+                for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/500,1))))):
                     self.enemy_list.append(self.Enemy_Jack(1500,self.random.randrange(0,800,80)))
                 
     
@@ -362,7 +366,11 @@ class IsoGame(object):
             self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (0, 0, 0))
             self.surface.blit(self.coins_value, (300,20))
             #odswiezamy czas
-            time = self.font2.render("{}:{}".format(4-self.minutes, 60 -self.seconds), 1, (0, 0, 0))
+            
+            if self.seconds > 50:
+                time = self.font2.render(str(4 - self.minutes) + ":0" + str(60 - self.seconds), 1, (0,0,0))
+            else:
+                time = self.font2.render(str(4 - self.minutes) + ":" + str(60 - self.seconds), 1, (0,0,0))
             self.surface.blit(time,(10,20))
             
     

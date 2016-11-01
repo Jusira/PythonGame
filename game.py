@@ -77,8 +77,7 @@ def main():
             if active_button == 1:
                 exec(open(os.path.join('python_files', 'game_upgrade.py')).read())
             if active_button == 2:
-                #wyswietli how to play
-                pass
+                exec(open(os.path.join('python_files', 'HowToPlay.py')).read())
             if active_button == 3:
                 win_status = open(os.path.join('other_data', 'w.txt'),'w')
                 win_value = win_status.write('0') 
@@ -100,13 +99,15 @@ def main():
                 upgrades.close()
             if active_button == 4:
                 #wyswietli creditsy
-                pass
+                exec(open(os.path.join('python_files', 'credits.py')).read())
             if active_button == 5:
                 return                 
         if keys[pygame.K_s]:
-            
-            exec(open(os.path.join('python_files','cong.py')).read())
-            exit()
+            if keys[pygame.K_p]:
+                if keys[pygame.K_a]:
+                    if keys[pygame.K_m]:
+                        exec(open(os.path.join('python_files','cong.py')).read())
+                        exit()
         
         
         #tlo
@@ -119,12 +120,13 @@ def main():
         screen.blit(text_coins, (530,10))
         
         if win_value == '1':
-            text_s = font2.render("Press s like a spam", 1, (10, 10, 255))
-            screen.blit(text_s, (550,100))
-            text_s = font2.render("to watch", 1, (10, 10, 255))
-            screen.blit(text_s, (600,130))
-            text_s = font2.render("the ending again", 1, (10, 10, 255))
-            screen.blit(text_s, (550,160))
+            text_s = font2.render("Press together keys", 1, (10, 10, 255))
+            screen.blit(text_s, (500,70))
+            text_s = font2.render("s + p + a + m", 1, (10, 10, 255))
+            screen.blit(text_s, (600,100))            
+            text_s = font2.render("to watchthe ending again", 1, (10, 10, 255))
+            screen.blit(text_s, (450,130))
+         
 
         pygame.display.flip()
         

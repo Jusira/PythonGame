@@ -115,7 +115,7 @@ def main():
     
     def buy_upgrade(coins_value,last):
         now = pygame.time.get_ticks()
-        if now - last > 300 and (int(coins_value)>=((int(upgrades_values[act_pos[0]-3])-1) * 10 + 10)) and int(upgrades_values[act_pos[0]-3]) < 5: # (x-1)*10 + 10 
+        if now - last > 300 and (int(coins_value)>=((int(upgrades_values[act_pos[0]-3])-1) * (10 + 15 * int(upgrades_values[act_pos[0] - 3])) + 10)) and int(upgrades_values[act_pos[0]-3]) < 5: # (x-1)*10 + 10 
             last = now
             coins_value = int(coins_value) - ((int(upgrades_values[act_pos[0]-3])-1) * 10 + 10)
             upgrades_values[act_pos[0]-3] = int(upgrades_values[act_pos[0]-3]) + 1
@@ -174,7 +174,7 @@ def main():
     
         
         screen.fill((255,255,255))  
-        pygame.draw.rect(screen,(10,10,255),(370,100 +act_pos[0]* 100,600,100),2)
+        pygame.draw.rect(screen,(10,10,255),(390,100 +act_pos[0]* 100,600,100),2)
         #stan coinsow
         text_coins = font2.render(str(coins_value), 1, (10, 10, 10))
         screen.blit(text_coins, (530,10))                 
@@ -207,15 +207,15 @@ def main():
         if int(upgrades_values[0]) == 5:
             positions[3][0] = 'maxed'
         else:
-            positions[3][0] = 'buy for %d' % ((int(upgrades_values[0])-1) * (10 +2 * int(upgrades_values[0])) + 10)
+            positions[3][0] = 'buy for %d' % ((int(upgrades_values[0])-1) * (10 + 15 * int(upgrades_values[0])) + 10)
         if int(upgrades_values[1]) == 5:
             positions[4][0] = 'maxed'
         else:
-            positions[4][0] = 'buy for %d' % ((int(upgrades_values[1])-1) * (10 + 5 * int(upgrades_values[1])) + 10)
+            positions[4][0] = 'buy for %d' % ((int(upgrades_values[1])-1) * (10 + 15 * int(upgrades_values[1])) + 10)
         if int(upgrades_values[2]) == 5:
             positions[5][0] = 'maxed'
         else:
-            positions[5][0] = 'buy for %d' % ((int(upgrades_values[2])-1) * (10 + 4* int(upgrades_values[2])) + 10)
+            positions[5][0] = 'buy for %d' % ((int(upgrades_values[2])-1) * (10 + 15* int(upgrades_values[2])) + 10)
         
         j = 0
         for el in positions:

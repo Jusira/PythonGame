@@ -1,10 +1,11 @@
 selected
 buy for 50
+select
 selected
 buy for 50
-buy for 50
+select
 selected
-buy for 50
-upgrade for 10
-upgrade for 10
-upgrade for 10
+maxed
+maxed
+maxed
+
