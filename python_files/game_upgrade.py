@@ -6,6 +6,10 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((1000, 800))
     pygame.display.set_caption('Game')
+    #dzwieki
+    pygame.mixer.init()
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.play(loops = -1)
     
     last = pygame.time.get_ticks()
     first_enter = True
@@ -115,7 +119,7 @@ def main():
     
     def buy_upgrade(coins_value,last):
         now = pygame.time.get_ticks()
-        if now - last > 300 and (int(coins_value)>=((int(upgrades_values[act_pos[0]-3])-1) * (10 + 15 * int(upgrades_values[act_pos[0] - 3])) + 10)) and int(upgrades_values[act_pos[0]-3]) < 5: # (x-1)*10 + 10 
+        if now - last > 300 and (int(coins_value)>=((int(upgrades_values[act_pos[0]-3])-1) * (10 + 15 * int(upgrades_values[act_pos[0] - 3])) + 10)) and int(upgrades_values[act_pos[0]-3]) < 7: # (x-1)*10 + 10 
             last = now
             coins_value = int(coins_value) - ((int(upgrades_values[act_pos[0]-3])-1) * 10 + 10)
             upgrades_values[act_pos[0]-3] = int(upgrades_values[act_pos[0]-3]) + 1
@@ -204,15 +208,15 @@ def main():
                 screen.blit(text, (400 + i* 200,120 + j * 100))
                 i += 1
             j += 1
-        if int(upgrades_values[0]) == 5:
+        if int(upgrades_values[0]) == 7:
             positions[3][0] = 'maxed'
         else:
             positions[3][0] = 'buy for %d' % ((int(upgrades_values[0])-1) * (10 + 15 * int(upgrades_values[0])) + 10)
-        if int(upgrades_values[1]) == 5:
+        if int(upgrades_values[1]) == 7:
             positions[4][0] = 'maxed'
         else:
             positions[4][0] = 'buy for %d' % ((int(upgrades_values[1])-1) * (10 + 15 * int(upgrades_values[1])) + 10)
-        if int(upgrades_values[2]) == 5:
+        if int(upgrades_values[2]) == 7:
             positions[5][0] = 'maxed'
         else:
             positions[5][0] = 'buy for %d' % ((int(upgrades_values[2])-1) * (10 + 15* int(upgrades_values[2])) + 10)

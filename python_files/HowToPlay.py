@@ -46,7 +46,10 @@ def main():
     text = font2.render("a", 1, (10, 10, 10))
     background.blit(text, (720,440))
     
-    
+    #dzwieki
+    pygame.mixer.init()
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.play(loops = -1)
     
     
     text = font.render("How to play", 1, (10, 10, 10))

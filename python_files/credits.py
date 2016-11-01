@@ -20,7 +20,10 @@ def main():
     screen.blit(background, (0, 0))
     pygame.display.flip()
 
-  
+    #dzwieki
+    pygame.mixer.init()
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.play(loops = -1)
     
     
     

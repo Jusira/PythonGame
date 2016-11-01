@@ -59,8 +59,9 @@ class IsoGame(object):
  
 
         #muzyka
-        pygame.mixer.init()
-        pygame.mixer.music.load(os.path.join('sounds', 'game.mp3'))
+        los = self.random.randrange(3)
+        pygame.mixer.init(frequency=22050,size=-16,channels=4)
+        pygame.mixer.music.load(os.path.join('sounds', 'game%d.mp3' % (los)))
         pygame.mixer.music.play(loops = -1)
 
         #wczytujemy dane:
@@ -221,6 +222,10 @@ class IsoGame(object):
                     
 
     def enemy_kill(self,en):
+        los = self.random.randrange(6)
+        sound = pygame.mixer.Sound(os.path.join('sounds', 'hit%d.wav' % (los)))
+        chan1 = pygame.mixer.Channel(2)
+        chan1.queue(sound)
         self.dead_enemy_list.append([0,en])
         self.enemy_list.remove(en)
         
@@ -348,6 +353,10 @@ class IsoGame(object):
             #odswiezamy gracza
             self.player_collisions()
             if now - self.last_shoot >= self.shoot_cooldown and self.shoot_now == True:
+                sound = pygame.mixer.Sound(os.path.join('sounds', 'gun.wav'))
+                chan1 = pygame.mixer.Channel(1)
+                chan1.queue(sound)
+                #pygame.mixer.Channel(1).play(sound)
                 self.bullet_list.append(self.Bullet_player(self.player_x + 100,self.player_y + 60))
                 self.last_shoot = now
             self.shoot_now = False    

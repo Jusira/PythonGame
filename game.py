@@ -27,6 +27,10 @@ def main():
     win_value = win_status.readline().strip('\n\r') 
     win_status.close()
     
+    #dzwieki
+    pygame.mixer.init()
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.play(loops = -1)
     
     #tworzymy buttony
     captions = ["Play","Upgrades","How to play", "Reset progress", "Credits", "Quit"]
