@@ -15,7 +15,7 @@ Skróty klawiszowe:
   * `A` - ruch w lewo,
   * `D` - ruch w prawo,
   * `SPACJA` - strzał,
-  * 'ESC' - wyjście.
+  * 'esc' - wyjście.
   
 Jak zacząć:
 Aby zagrać w grę, należy uruchomić plik `game.py`
@@ -36,7 +36,7 @@ Keyboad shortcuts:
   * `A` - left,
   * `D` - right,
   * `SPACJA` - shoot,
-  * 'ESC' - quit.
+  * 'Esc' - quit.
   
 How to start:
 To play game, launch file `game.py`
