@@ -18,6 +18,7 @@ Skróty klawiszowe:
   * `ESC` - wyjście.
   
 Jak zacząć:
+
 Aby zagrać w grę, należy uruchomić plik `game.py`
   
 ======================
@@ -26,7 +27,7 @@ Repository `PythonGame` contains files from my horizontal shooter game, written 
 
 Game rules:
 
-Player controls robot, whose task is to break through a horde of zombies. Primarily he has to avoid approaching enemies.He has a gun, which he can use to shoot and kill zombies. He gains coins for each killed enemy, which he can spend on upgrades. 
+Player controls robot, whose task is to break through a horde of zombies. Primarily he has to avoid approaching enemies. He has a gun, which he can use to shoot and kill zombies. He gains coins for each killed enemy. He can spend coins on upgrades. 
 Player wins, when he survive for 5 minutes, and lose, when he loses all lifes.
 
 Keyboad shortcuts:
@@ -39,4 +40,5 @@ Keyboad shortcuts:
   * `ESC` - quit.
   
 How to start:
+
 To play game, launch file `game.py`
