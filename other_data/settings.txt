@@ -5,6 +5,7 @@ buy for 50
 buy for 50
 selected
 buy for 50
-upgrade for 10
-upgrade for 10
-upgrade for 10
+buy for 10
+buy for 10
+buy for 10
+

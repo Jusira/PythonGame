@@ -57,12 +57,9 @@ def main():
     
     text = font2.render("Your task is to survive the attack of", 1, (10, 10, 10))
     background.blit(text, (10,105))
-    text = font2.render("the zombie horde for 5 minutes.", 1, (10, 10, 10))
-    background.blit(text, (10,165))
-    text = font2.render("If you do this, you'll get", 1, (10, 10, 10))
-    background.blit(text, (10,225))
-    text = font2.render("a suprising prize.", 1, (10, 10, 10))
-    background.blit(text, (10,270))
+    text = font2.render("the horde of zombies for 5 minutes.", 1, (10, 10, 10))
+    background.blit(text, (10,200))
+
         
     text = font2.render("movement:", 1, (10, 10, 10))
     background.blit(text, (30,400))

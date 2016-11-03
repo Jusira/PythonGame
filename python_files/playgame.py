@@ -104,10 +104,14 @@ class IsoGame(object):
             self.grass_image = pygame.image.load(os.path.join('images/textures', 'grass.png')) #trawa
         self.grass_positions = [[0,0],[1000,0],[2000,0]] #pozycje trawy
         
+        #panel
+        self.panel_image = pygame.image.load(os.path.join('images', 'panel2.png')) #trawa
+        
+        
         #czcionka coins
         self.font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 50)
         self.actual_coins_status = 0
-        self.text_coins = self.font2.render("Coins:", 1, (0, 0, 0))
+        self.text_coins = self.font2.render("Coins:", 1, (255, 255, 255))
         
         #tablica animacji:
         if self.settings_values[5] == 'selected':
@@ -339,9 +343,10 @@ class IsoGame(object):
         if now - self.last >= self.player_cooldown:
             self.last = now
             self.surface.fill((0,0,0)) # czyscimy ekran, malo wydajne ale wystarczy 
-                      
+            #odswiezamy tlo          
             self.grass_refresh()
-            #odswiezamy tlo
+            self.surface.blit(self.panel_image,(0,-5)) 
+            
             
             #sprawdzamy kolizje
             self.bullets_collisions()
@@ -368,19 +373,19 @@ class IsoGame(object):
             self.bullet_move()
             self.bullet_update()
             self.bullet_refresh()
-            self.surface.blit(self.text_coins, (150,20))
+            self.surface.blit(self.text_coins, (140,20))
             for i in range(self.lifes):
-                self.surface.blit(self.life_image,(1150 + i * 70,10))
+                self.surface.blit(self.life_image,(950 + i * 70,10))
             #odswiezamy coinsy
-            self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (0, 0, 0))
-            self.surface.blit(self.coins_value, (300,20))
+            self.coins_value = self.font2.render(str(self.actual_coins_status), 1, (255, 255, 255))
+            self.surface.blit(self.coins_value, (280,20))
             #odswiezamy czas
             
             if self.seconds > 50:
-                time = self.font2.render(str(4 - self.minutes) + ":0" + str(60 - self.seconds), 1, (0,0,0))
+                time = self.font2.render(str(4 - self.minutes) + ":0" + str(60 - self.seconds), 1, (255, 255, 255))
             else:
-                time = self.font2.render(str(4 - self.minutes) + ":" + str(60 - self.seconds), 1, (0,0,0))
-            self.surface.blit(time,(10,20))
+                time = self.font2.render(str(4 - self.minutes) + ":" + str(60 - self.seconds), 1, (255, 255, 255))
+            self.surface.blit(time,(15,20))
             
     
     def game_exit(self):

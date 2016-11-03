@@ -121,7 +121,7 @@ def main():
         now = pygame.time.get_ticks()
         if now - last > 300 and (int(coins_value)>=((int(upgrades_values[act_pos[0]-3])-1) * (10 + 15 * int(upgrades_values[act_pos[0] - 3])) + 10)) and int(upgrades_values[act_pos[0]-3]) < 7: # (x-1)*10 + 10 
             last = now
-            coins_value = int(coins_value) - ((int(upgrades_values[act_pos[0]-3])-1) * 10 + 10)
+            coins_value = int(coins_value) - ((int(upgrades_values[act_pos[0]-3])-1) * (10 + 15 * int(upgrades_values[act_pos[0] - 3]))  + 10)
             upgrades_values[act_pos[0]-3] = int(upgrades_values[act_pos[0]-3]) + 1
         return (upgrades_values,coins_value, last)
     
