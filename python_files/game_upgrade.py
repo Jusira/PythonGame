@@ -8,7 +8,7 @@ def main():
     pygame.display.set_caption('Game')
     #dzwieki
     pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.wav'))
     pygame.mixer.music.play(loops = -1)
     
     last = pygame.time.get_ticks()

@@ -22,7 +22,7 @@ def main():
 
     #dzwieki
     pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.wav'))
     pygame.mixer.music.play(loops = -1)
     
     

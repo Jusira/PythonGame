@@ -39,7 +39,7 @@ def main():
     
     #dzwieki
     pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join('sounds', 'win.mp3'))
+    pygame.mixer.music.load(os.path.join('sounds', 'win.wav'))
     pygame.mixer.music.play()
 
     #obrazek
@@ -75,7 +75,7 @@ def main():
             screen.blit(text, (300,220))
             
         if 6500 < now - start and play == False:
-            pygame.mixer.music.load(os.path.join('sounds', 'cong.mp3'))
+            pygame.mixer.music.load(os.path.join('sounds', 'cong.wav'))
             pygame.mixer.music.play(0)
             play = True
         if 7500< now - start:
@@ -84,7 +84,7 @@ def main():
             text = font.render("That's all.", 1, (255, 10, 10))
             screen.blit(text, (100,650)) 
         if 13500< now - start and play2 == False:    
-            pygame.mixer.music.load(os.path.join('sounds', 'win.mp3'))
+            pygame.mixer.music.load(os.path.join('sounds', 'win.wav'))
             pygame.mixer.music.play(0)
             play2 = True
         if 14500< now - start:

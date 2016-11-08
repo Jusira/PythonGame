@@ -61,7 +61,7 @@ class IsoGame(object):
         #muzyka
         los = self.random.randrange(3)
         pygame.mixer.init(frequency=22050,size=-16,channels=4)
-        pygame.mixer.music.load(os.path.join('sounds', 'game%d.mp3' % (los)))
+        pygame.mixer.music.load(os.path.join('sounds', 'game%d.wav' % (los)))
         pygame.mixer.music.play(loops = -1)
 
         #wczytujemy dane:
@@ -397,12 +397,13 @@ class IsoGame(object):
         while self.gamestate==1:           
             for event in pygame.event.get():
                 if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
-                   #self.gamestate = 0
+                    self.gamestate = 0
                     exec(open(os.path.join('python_files','game_end.py')).read())
                     exit()
            
             if self.dead == True:
                  pygame.time.delay(1000)
+                 self.gamestate=0
                  exec(open(os.path.join('python_files','game_end.py')).read())
                  exit()
             

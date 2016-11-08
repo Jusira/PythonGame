@@ -7,6 +7,8 @@ def main():
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('Game')
     
+    enter = pygame.time.get_ticks()
+    
     #wczytanie ilosci coinsow i wyzerownanie pliku
     current_game = open(os.path.join('other_data', 'current_game.txt'),'r')
     coins_value = current_game.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
@@ -53,15 +55,18 @@ def main():
     # Event loop
     while game_active == 1:
         for event in pygame.event.get():
-            if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE) or (event.type==pygame.KEYDOWN and event.key==pygame.K_RETURN):
+            if event.type==pygame.QUIT or (event.type==pygame.KEYDOWN and event.key==pygame.K_ESCAPE):
                 exec(open('game.py').read())
                 return #wyjscie z petli
                 
             
         keys = pygame.key.get_pressed() # odczytujemy stan klawiszy
        
-                             
-        
+        if keys[pygame.K_RETURN]:
+            now = pygame.time.get_ticks()
+            if now - enter >250: #po to, zeby nie wciskal nam sie enter na poczatku                     
+                exec(open('game.py').read())
+                return
         
         #tlo
                    

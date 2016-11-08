@@ -7,10 +7,7 @@ def main():
     screen = pygame.display.set_mode((1000, 800))
     pygame.display.set_caption('Game')
     
-    #wczytanie stanu gry
-    game_status = open(os.path.join('other_data', 'game_status.txt'),'r')
-    coins_value = game_status.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
-    
+   
     #kolor tla
     background = pygame.Surface(screen.get_size())
     background = background.convert()
@@ -29,7 +26,7 @@ def main():
     
     #dzwieki
     pygame.mixer.init()
-    pygame.mixer.music.load(os.path.join('sounds', 'menu.mp3'))
+    pygame.mixer.music.load(os.path.join('sounds', 'menu.wav'))
     pygame.mixer.music.play(loops = -1)
     
     #tworzymy buttony
@@ -120,6 +117,10 @@ def main():
         buttons[active_button] = font.render(captions[active_button], 1, (255,10,255)) #napis + kolor    
         screen.blit(buttons[active_button], (50,100+100*active_button)) #tekst + pozycja
         #stan coinsow
+        game_status = open(os.path.join('other_data', 'game_status.txt'),'r')
+        coins_value = game_status.readline().strip('\n\r') #wczytuje linie z pliku bez znaku konca linii
+        game_status.close()
+    
         text_coins = font2.render(coins_value, 1, (10, 10, 10))
         screen.blit(text_coins, (530,10))
         
@@ -134,7 +135,7 @@ def main():
 
         pygame.display.flip()
         
-    game_status.close()
+    
 
 
 if __name__ == '__main__': main()
