@@ -39,8 +39,6 @@ def main():
     background.blit(text_coins, (50,220))
     text_coins = font.render(coins_value, 1, (10, 10, 10))
     background.blit(text_coins, (450,220)) 
-    text_coins = font2.render("Press ENTER to play again", 1, (10, 10, 10))
-    background.blit(text_coins, (100,400))
     text_coins = font2.render("Press ESC to return to menu", 1, (10, 10, 10))
     background.blit(text_coins, (100,480))
      
@@ -61,12 +59,6 @@ def main():
                 
             
         keys = pygame.key.get_pressed() # odczytujemy stan klawiszy
-       
-        if keys[pygame.K_RETURN]:
-            now = pygame.time.get_ticks()
-            if now - enter >250: #po to, zeby nie wciskal nam sie enter na poczatku                     
-                exec(open('game.py').read())
-                return
         
         #tlo
                    
@@ -75,5 +67,5 @@ def main():
     
 if __name__ == '__main__': 
     main()
-    
+    exit()
 

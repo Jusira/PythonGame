@@ -30,9 +30,9 @@ def main():
     pygame.mixer.music.play(loops = -1)
     
     #tworzymy buttony
-    captions = ["Play","Upgrades","How to play", "Reset progress", "Credits", "Quit"]
-    buttons = [0] * 6
-    for i in range(6):
+    captions = ["Play","Upgrades","2 Players","How to play", "Reset progress", "Credits", "Quit"]
+    buttons = [0] * 7
+    for i in range(7):
         buttons[i] = font.render(captions[i], 1, (10,10,10)) #napis + kolor    
         background.blit(buttons[i], (50,100+100*i)) #tekst + pozycja
     
@@ -47,7 +47,7 @@ def main():
         if now - last > 250: 
             last = pygame.time.get_ticks()
             if up_or_down == "down":
-                if active_button < 5:
+                if active_button < 6:
                     return (active_button + 1, last)
             else:
                 if active_button > 0:
@@ -74,12 +74,14 @@ def main():
             
         if keys[pygame.K_RETURN]:
             if active_button == 0:
-                exec(open(os.path.join('python_files', 'playgame.py')).read())
+                exec(open(os.path.join('python_files', 'playgame2.py')).read())
             if active_button == 1:
                 exec(open(os.path.join('python_files', 'game_upgrade.py')).read())
             if active_button == 2:
-                exec(open(os.path.join('python_files', 'HowToPlay.py')).read())
+                exec(open(os.path.join('python_files', 'playgame_2players.py')).read())
             if active_button == 3:
+                exec(open(os.path.join('python_files', 'HowToPlay.py')).read())
+            if active_button == 4:
                 win_status = open(os.path.join('other_data', 'w.txt'),'w')
                 win_value = win_status.write('0') 
                 win_status.close()
@@ -98,10 +100,10 @@ def main():
                 for i in range(3):
                     upgrades.write('1' + '\n')
                 upgrades.close()
-            if active_button == 4:
+            if active_button == 5:
                 #wyswietli creditsy
                 exec(open(os.path.join('python_files', 'credits.py')).read())
-            if active_button == 5:
+            if active_button == 6:
                 return                 
         if keys[pygame.K_s]:
             if keys[pygame.K_p]:
