@@ -3,12 +3,14 @@ PythonGame
 
 Repozytorium `PythonGame` zawiera pliki mojej gry z gatunku horizontal shooter, napisanej w języku Python.
 
-Zasady gry:
+###Zasady gry:
 
 Gracz w ciela się w robota, którego zadaniem jest przedrzeć się przez hordę zombie. Przede wszystkim musi on unikać idących z naprzeciwka przeciwników. Do dyspozycji ma broń, z której może strzelać i eliminować zombie. Za każdego zabitego przeciwnika dostaje monety, które może wydać na ulepszenia. 
 Gracz wygrywa, gdy wytrzyma natarcie hordy przez 5 minut, a przegrywa, gdy straci wszystkie życia.
 
-Skróty klawiszowe:
+###Skróty klawiszowe:
+
+Pierwszy gracz:
 
   * `W` - ruch w górę,
   * `S` - ruch w dół,
@@ -17,28 +19,76 @@ Skróty klawiszowe:
   * `SPACJA` - strzał,
   * `ESC` - wyjście.
   
-Jak zacząć:
+Drugi gracz:
+
+  * `↑` - ruch w górę,
+  * `↓` - ruch w dół,
+  * `←` - ruch w lewo,
+  * `→` - ruch w prawo,
+  * `l` - strzał,
+  * `ESC` - wyjście.  
+  
+###Jak zacząć:
 
 Aby zagrać w grę, należy uruchomić plik `game.py`
+
+Grafiki oraz dźwięki zostały wykorzystane z następujących źródeł:
+
+http://www.gameart2d.com/freebies.html
+
+http://www.1001freefonts.com/from_cartoon_blocks.font
+
+http://opengameart.org/node/9698
+
+http://opengameart.org/content/snow-texture
+
+http://freemusicarchive.org/music/BoxCat_Games/
+
+http://opengameart.org/content/gunloop-8bit
   
 ======================
 
 Repository `PythonGame` contains files from my horizontal shooter game, written in Python.
 
-Game rules:
+###Game rules:
 
 Player controls robot, whose task is to break through a horde of zombies. Primarily he has to avoid approaching enemies. He has a gun, which he can use to shoot and kill zombies. He gains coins for each killed enemy. He can spend coins on upgrades. 
 Player wins, when he survive for 5 minutes, and lose, when he loses all lifes.
 
-Keyboad shortcuts:
+###Keyboad shortcuts:
+
+Player 1:
 
   * `W` - up,
   * `S` - down,
   * `A` - left,
   * `D` - right,
-  * `SPACJA` - shoot,
+  * `SPACE` - shoot,
   * `ESC` - quit.
   
-How to start:
+Player :
+
+  * `↑` - up,
+  * `↓` - down,
+  * `←` - left,
+  * `→` - right,
+  * `l` - shoot,
+  * `ESC` - quit.
+  
+###How to start:
 
 To play game, launch file `game.py`
+
+Grafics and sounds were taken from the following sources:
+
+http://www.gameart2d.com/freebies.html
+
+http://www.1001freefonts.com/from_cartoon_blocks.font
+
+http://opengameart.org/node/9698
+
+http://opengameart.org/content/snow-texture
+
+http://freemusicarchive.org/music/BoxCat_Games/
+
+http://opengameart.org/content/gunloop-8bit
