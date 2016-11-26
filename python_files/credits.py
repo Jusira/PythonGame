@@ -27,7 +27,7 @@ def main():
     
     
     
-    text = font.render("Credits", 1, (10, 10, 10))
+    text = font.render("About", 1, (10, 10, 10))
     background.blit(text, (300,5))
     
     text = font4.render("Author:", 1, (255, 100, 0))
@@ -35,10 +35,7 @@ def main():
     text = font4.render("Alicja Gosiewska", 1, (255, 100, 0))
     background.blit(text, (50,300))
     
-    text = font2.render("All graphics and sounds", 1, (10, 10, 10))
-    background.blit(text, (10,550))
-    text = font2.render("are under CC0 license.", 1, (10, 10, 10))
-    background.blit(text, (300,600))
+
    
 
     text = font3.render("Press ESC to back to  menu", 1, (255, 10, 10))

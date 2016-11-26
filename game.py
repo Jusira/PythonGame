@@ -30,7 +30,7 @@ def main():
     pygame.mixer.music.play(loops = -1)
     
     #tworzymy buttony
-    captions = ["Play","Upgrades","2 Players","How to play", "Reset progress", "Credits", "Quit"]
+    captions = ["Play","Upgrades","2 Players","How to play", "Reset progress", "About", "Quit"]
     buttons = [0] * 7
     for i in range(7):
         buttons[i] = font.render(captions[i], 1, (10,10,10)) #napis + kolor    
