@@ -19,40 +19,16 @@ class IsoGame(object):
             self.image = 0
                           
         
-    class Enemy_zombie_male():
-        def __init__(self,x,y):
+    class Enemy():
+        def __init__(self,x,y,speed, coins, hp, img):
             self.position_x = x
             self.position_y = y
-            self.speed = 20
+            self.speed = speed
             self.height = 195
             self.width = 161
-            self.coins = 1
-            self.hp = 1
-            self.image = 0
-            
-
-    class Enemy_zombie_female():
-        def __init__(self,x,y):
-            self.position_x = x
-            self.position_y = y
-            self.speed = 15
-            self.height = 195
-            self.width = 161
-            self.coins = 2
-            self.hp = 2
-            self.image = 1
-            
-            
-    class Enemy_Jack():
-        def __init__(self,x,y):
-            self.position_x = x
-            self.position_y = y
-            self.speed = 60
-            self.height = 195
-            self.width = 161
-            self.coins = 1
-            self.hp = 1
-            self.image = 2
+            self.coins = coins
+            self.hp = hp
+            self.image = img
             
     class Player():
         def __init__(self,x,y,lifes, img1, img2, img3,create_time):
@@ -162,13 +138,14 @@ class IsoGame(object):
         # zmienna stanu gry
         self.gamestate = 1  # 1 - run, 0 - exit
         
+         #tworzymy gracza 1
         self.Player_1 = self.Player(50, 500, self.lifes,
                           [pygame.image.load(os.path.join('images/robot_shoot', 'rsz_1rsz_runshoot%d.png' % i)) for i in range(5,10)],
                           [pygame.image.load(os.path.join('images/robot_run', 'Run(%d).png' % i)) for i in range(1,9)] ,
                           [pygame.image.load(os.path.join('images/bullet', 'rsz_bullet_00%d.png' % i)) for i in range(0,5)],
                           pygame.time.get_ticks())
            
-      
+        #tworzymy gracza 2
         self.Player_2 = self.Player(50, 300, self.lifes,
             [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_throw__00%d.png' % i)) for i in range(5)],
             [pygame.image.load(os.path.join('images/ninja_male', 'rsz_rsz_run__00%d.png' % i)) for i in range(10)] ,
@@ -192,21 +169,25 @@ class IsoGame(object):
 
 
     def coins_for_kill(self,en):
+        """zwieksza ilosc coinsow w zaleznosci od typu przeciwnika"""
         self.actual_coins_status += en.coins
     
-    def collision(self,x1,y1,w1,h1,x2,y2,w2,h2): #sprawdza kolizję z duszkiem
+    def collision(self,x1,y1,w1,h1,x2,y2,w2,h2):
+        """sprawdza kolizje z przeciwniekiem"""
         if x1 >= x2+w2: return True
         if x1+w1 <= x2: return True
         if y1 >= y2+h2: return True
         if y1+h1 <= y2: return True
         return False
     
-    def screen_collision(self, x,y): #sprawdza kolizję z końcem ekranu
+    def screen_collision(self, x,y): 
+        """sprawdza kolizję z końcem ekranu"""
         if x <= -50 or x >= 1320: return True
         if y <= -20 or y >= 800: return True
         return False
     
     def bullets_collisions(self,Player):
+        """sprawdza kolizje pociskow"""
         for bl in Player.bullet_list:
             self.bl_rect = pygame.Rect(bl.position_x, bl.position_y, bl.width, bl.height)
             bl_used = False
@@ -226,6 +207,7 @@ class IsoGame(object):
 
                         
     def player_collisions(self,Player):
+        """sprawdza kolizje gracza z przeciwnikami"""
         self.pl_rect = pygame.Rect(Player.position_x, Player.position_y - 50, 100, 130)
         now = pygame.time.get_ticks()
         for en in self.enemy_list:
@@ -243,6 +225,7 @@ class IsoGame(object):
                     
 
     def enemy_kill(self,en):
+        """usuniecie przeciwnika"""
         los = self.random.randrange(6)
         sound = pygame.mixer.Sound(os.path.join('sounds', 'hit%d.wav' % (los)))
         chan1 = pygame.mixer.Channel(2)
@@ -251,6 +234,7 @@ class IsoGame(object):
         self.enemy_list.remove(en)
         
     def death_animation(self):
+        """wyswietlenie animacji smierci"""
         for en in self.dead_enemy_list:
             if en[0] < len(self.animations[2*en[1].image+1]):
                 self.surface.blit(self.animations[2*en[1].image + 1][en[0]],(en[1].position_x - 10 * en[0],en[1].position_y))
@@ -260,6 +244,7 @@ class IsoGame(object):
         
     
     def move(self,Player,dirx,diry):
+        """obsluga poruszania sie po ekranie"""
         dx = Player.position_x + (dirx * self.speed)
         dy = Player.position_y + (diry * self.speed)
         if self.screen_collision(dx,dy):
@@ -268,6 +253,7 @@ class IsoGame(object):
         Player.position_y = dy
         
     def player_shoot(self,Player):
+        """obsluga strzelania"""
         if Player.licznik == 1:
             Player.player_frame = (Player.player_frame +1) % 1000
         else:
@@ -286,14 +272,14 @@ class IsoGame(object):
             self.licznik_przeciwnikow += 1
             #tworzymy zwykle zombiaki
             for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/100,2.5))))):
-                self.enemy_list.append(self.Enemy_zombie_male(1500,self.random.randrange(0,800,80)))
+                self.enemy_list.append(self.Enemy(1500, self.random.randrange(0,800,80), 20, 1,1, 0))
             #tworzymy female zombie
             if self.minutes > 0:
                 for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/300,2))))):
-                    self.enemy_list.append(self.Enemy_zombie_female(1500,self.random.randrange(0,800,80)))
+                    self.enemy_list.append(self.Enemy(1500, self.random.randrange(0,800,80), 15, 2, 2, 1))
             if self.minutes > 2:
                 for i in range(abs(int(self.random.normalvariate(1, min(self.licznik_przeciwnikow/500,1))))):
-                    self.enemy_list.append(self.Enemy_Jack(1500,self.random.randrange(0,800,80)))
+                    self.enemy_list.append(self.Enemy(1500, self.random.randrange(0,800,80), 60, 1, 1, 2))
                 
     
     def enemy_move(self):
@@ -349,7 +335,8 @@ class IsoGame(object):
         
     
                 
-    def game_player_refresh(self,Player,now,life):      
+    def game_player_refresh(self,Player,now,life):    
+        """odswieza gracza"""
         #sprawdzamy kolizje
         self.bullets_collisions(Player)
         self.enemy_refresh(Player)
@@ -397,7 +384,15 @@ class IsoGame(object):
         else:
             time = self.font2.render(str(4 - self.minutes) + ":" + str(60 - self.seconds), 1, (255, 255, 255))
         self.surface.blit(time,(15,20))
-            
+    def timer(self):
+        """odmierza czas"""
+        if self.milliseconds > 1000:
+                self.seconds += 1
+                self.milliseconds -= 1000
+        if self.seconds > 60:
+            self.minutes += 1
+            self.seconds -= 60  
+        self.milliseconds += self.clock.tick_busy_loop(60)        
     
     def game_exit(self):
         """ funkcja przerywa dzialanie gry i wychodzi do systemu"""
@@ -447,16 +442,7 @@ class IsoGame(object):
                 self.Player_2.shoot_now2 = True 
                 
             self.enemy_create()
-            
-            # odliczamy czas
-            if self.milliseconds > 1000:
-                self.seconds += 1
-                self.milliseconds -= 1000
-            if self.seconds > 60:
-                self.minutes += 1
-                self.seconds -= 60
-                
-            self.milliseconds += self.clock.tick_busy_loop(60)
+            self.timer()
           
             self.now = pygame.time.get_ticks()
             if self.now - self.last >= self.player_cooldown:

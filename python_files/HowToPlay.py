@@ -24,6 +24,7 @@ def main():
     background.blit(przycisk,(780,420))
     background.blit(przycisk,(880,420))
     background.blit(przycisk,(680,420))
+    background.blit(przycisk,(500,520))
     space = pygame.image.load(os.path.join('images/HowToPlay', 'SPACE.png'))
     background.blit(space,(150,520))
     up = pygame.image.load(os.path.join('images/HowToPlay', 'up.png'))
@@ -45,6 +46,8 @@ def main():
     background.blit(text, (920,440))
     text = font2.render("a", 1, (10, 10, 10))
     background.blit(text, (720,440))
+    text = font2.render("l", 1, (10, 10, 10))
+    background.blit(text, (540,535))
     
     #dzwieki
     pygame.mixer.init()
@@ -69,6 +72,9 @@ def main():
     
     text = font2.render("fire:", 1, (10, 10, 10))
     background.blit(text, (30,520))
+    
+    text = font2.render("or:", 1, (10, 10, 10))
+    background.blit(text, (400,520))
     
     text = font2.render("you get cois for killing zombies.", 1, (10, 10, 10))
     background.blit(text, (30,600))
