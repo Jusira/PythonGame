@@ -35,10 +35,15 @@ Aby zagrać w grę, należy uruchomić plik `game.py`
 Grafiki oraz dźwięki zostały wykorzystane z następujących źródeł:
 
 http://www.gameart2d.com/freebies.html
+
 http://www.1001freefonts.com/from_cartoon_blocks.font
+
 http://opengameart.org/node/9698
+
 http://opengameart.org/content/snow-texture
+
 http://freemusicarchive.org/music/BoxCat_Games/
+
 http://opengameart.org/content/gunloop-8bit
   
 ======================
@@ -77,8 +82,13 @@ To play game, launch file `game.py`
 Grafics and sounds were taken from the following sources:
 
 http://www.gameart2d.com/freebies.html
+
 http://www.1001freefonts.com/from_cartoon_blocks.font
+
 http://opengameart.org/node/9698
+
 http://opengameart.org/content/snow-texture
+
 http://freemusicarchive.org/music/BoxCat_Games/
+
 http://opengameart.org/content/gunloop-8bit
