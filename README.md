@@ -10,6 +10,8 @@ Gracz wygrywa, gdy wytrzyma natarcie hordy przez 5 minut, a przegrywa, gdy strac
 
 Skróty klawiszowe:
 
+Pierwszy gracz:
+
   * `W` - ruch w górę,
   * `S` - ruch w dół,
   * `A` - ruch w lewo,
@@ -17,9 +19,27 @@ Skróty klawiszowe:
   * `SPACJA` - strzał,
   * `ESC` - wyjście.
   
+Drugi gracz:
+
+  * `↑` - ruch w górę,
+  * `↓` - ruch w dół,
+  * `←` - ruch w lewo,
+  * `→` - ruch w prawo,
+  * `l` - strzał,
+  * `ESC` - wyjście.  
+  
 Jak zacząć:
 
 Aby zagrać w grę, należy uruchomić plik `game.py`
+
+Grafiki oraz dźwięki zostały wykorzystane z następujących źródeł:
+
+http://www.gameart2d.com/freebies.html
+http://www.1001freefonts.com/from_cartoon_blocks.font
+http://opengameart.org/node/9698
+http://opengameart.org/content/snow-texture
+http://freemusicarchive.org/music/BoxCat_Games/
+http://opengameart.org/content/gunloop-8bit
   
 ======================
 
@@ -32,13 +52,33 @@ Player wins, when he survive for 5 minutes, and lose, when he loses all lifes.
 
 Keyboad shortcuts:
 
+Player 1:
+
   * `W` - up,
   * `S` - down,
   * `A` - left,
   * `D` - right,
-  * `SPACJA` - shoot,
+  * `SPACE` - shoot,
+  * `ESC` - quit.
+  
+Player :
+
+  * `↑` - up,
+  * `↓` - down,
+  * `←` - left,
+  * `→` - right,
+  * `l` - shoot,
   * `ESC` - quit.
   
 How to start:
 
 To play game, launch file `game.py`
+
+Grafics and sounds were taken from the following sources:
+
+http://www.gameart2d.com/freebies.html
+http://www.1001freefonts.com/from_cartoon_blocks.font
+http://opengameart.org/node/9698
+http://opengameart.org/content/snow-texture
+http://freemusicarchive.org/music/BoxCat_Games/
+http://opengameart.org/content/gunloop-8bit
