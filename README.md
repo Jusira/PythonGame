@@ -45,6 +45,8 @@ http://opengameart.org/content/snow-texture
 http://freemusicarchive.org/music/BoxCat_Games/
 
 http://opengameart.org/content/gunloop-8bit
+
+http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
   
 ======================
 
@@ -92,3 +94,5 @@ http://opengameart.org/content/snow-texture
 http://freemusicarchive.org/music/BoxCat_Games/
 
 http://opengameart.org/content/gunloop-8bit
+
+http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
