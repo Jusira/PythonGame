@@ -32,20 +32,35 @@ Drugi gracz:
 
 Aby zagrać w grę, należy uruchomić plik `game.py`
 
-Grafiki oraz dźwięki zostały wykorzystane z następujących źródeł:
 
+Grafiki i dźwięki zostały wykorzystane z następujących źródeł:
+
+Author: Gameart2d
+License: CC0
 http://www.gameart2d.com/freebies.html
 
+Author: Galdino Otten:
+License: Free for Personal Use
 http://www.1001freefonts.com/from_cartoon_blocks.font
 
+Author: p0ss
+License: GPL2
 http://opengameart.org/node/9698
 
+Author: Downdate
+License: CC-BY 3.0
 http://opengameart.org/content/snow-texture
 
+Author: BoxCat Games
+License: CC
 http://freemusicarchive.org/music/BoxCat_Games/
 
+Author: Luke.RUSTLTD
+License: CC0
 http://opengameart.org/content/gunloop-8bit
 
+Author: Simzer
+License: Creative Commons Attribution-Share Alike 3.0
 http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
   
 ======================
@@ -81,18 +96,33 @@ Player :
 
 To play game, launch file `game.py`
 
+
 Grafics and sounds were taken from the following sources:
 
+Author: Gameart2d
+License: CC0
 http://www.gameart2d.com/freebies.html
 
+Author: Galdino Otten:
+License: Free for Personal Use
 http://www.1001freefonts.com/from_cartoon_blocks.font
 
+Author: p0ss
+License: GPL2
 http://opengameart.org/node/9698
 
+Author: Downdate
+License: CC-BY 3.0
 http://opengameart.org/content/snow-texture
 
+Author: BoxCat Games
+License: CC
 http://freemusicarchive.org/music/BoxCat_Games/
 
+Author: Luke.RUSTLTD
+License: CC0
 http://opengameart.org/content/gunloop-8bit
 
+Author: Simzer
+License: Creative Commons Attribution-Share Alike 3.0
 http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
