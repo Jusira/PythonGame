@@ -60,7 +60,7 @@ License: CC0
 http://opengameart.org/content/gunloop-8bit
 
 Author: Simzer
-License: Creative Commons Attribution-Share Alike 3.0
+License: CC-SA 3.0
 http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
   
 ======================
@@ -124,5 +124,5 @@ License: CC0
 http://opengameart.org/content/gunloop-8bit
 
 Author: Simzer
-License: Creative Commons Attribution-Share Alike 3.0
+License: CC-SA 3.0
 http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
