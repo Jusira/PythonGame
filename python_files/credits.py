@@ -13,7 +13,7 @@ def main():
 
     # Display some text
     font = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 100)
-    font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 60)
+    font2 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 50)
     font3 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 80)
     font4 = pygame.font.Font(os.path.join('other_data', 'From Cartoon Blocks.ttf'), 120)
     
@@ -35,8 +35,11 @@ def main():
     text = font4.render("Alicja Gosiewska", 1, (255, 100, 0))
     background.blit(text, (50,300))
     
-
-   
+    
+    text = font2.render("The readme file contains information about", 1, (255, 10, 10))
+    background.blit(text, (50,550))  
+    text = font2.render("authors of graphics and sounds", 1, (255, 10, 10))
+    background.blit(text, (50,600))  
 
     text = font3.render("Press ESC to back to  menu", 1, (255, 10, 10))
     background.blit(text, (50,700))  
