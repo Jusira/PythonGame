@@ -1,7 +1,7 @@
 PythonGame
 ======================
 English description below
-======================
+
 
 Repozytorium `PythonGame` zawiera pliki mojej gry z gatunku horizontal shooter, napisanej w języku Python.
 
