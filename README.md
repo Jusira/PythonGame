@@ -8,6 +8,8 @@ Repozytorium `PythonGame` zawiera pliki mojej gry z gatunku horizontal shooter, 
 Gracz w ciela się w robota, którego zadaniem jest przedrzeć się przez hordę zombie. Przede wszystkim musi on unikać idących z naprzeciwka przeciwników. Do dyspozycji ma broń, z której może strzelać i eliminować zombie. Za każdego zabitego przeciwnika dostaje monety, które może wydać na ulepszenia. 
 Gracz wygrywa, gdy wytrzyma natarcie hordy przez 5 minut, a przegrywa, gdy straci wszystkie życia.
 
+[](https://github.com/jusira/Gra-PW-PADPy-2016/images/Screenshoot.png)
+
 ###Skróty klawiszowe:
 
 Pierwszy gracz:
