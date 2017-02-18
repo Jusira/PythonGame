@@ -36,6 +36,7 @@ Drugi gracz:
 
 Aby zagrać w grę, należy uruchomić plik `game.py`
 
+======================
 
 Grafiki i dźwięki zostały wykorzystane z następujących źródeł:
 
@@ -66,7 +67,10 @@ http://opengameart.org/content/gunloop-8bit
 Author: Simzer
 License: CC-SA 3.0
 http://simzer.deviantart.com/art/No-one-expects-the-Spanish-Inquisition-322371889
-  
+
+
+======================
+PythonGame
 ======================
 
 Repository `PythonGame` contains files from my horizontal shooter game, written in Python.
@@ -100,6 +104,7 @@ Player :
 
 To play game, launch file `game.py`
 
+======================
 
 Grafics and sounds were taken from the following sources:
 
